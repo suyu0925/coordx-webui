@@ -2,6 +2,8 @@ import clsx from 'clsx'
 import { convertor, CoordinateType, format, parse } from 'coordx'
 import { useState } from 'react'
 
+const normalizeCoordStr = (str: string) => format(parse(str))
+
 function App() {
   const [state, setState] = useState({
     source: null as CoordinateType | null,
@@ -66,6 +68,12 @@ function App() {
         <button
           className={buttonClass}
           onClick={() => onConvert('WGS84')}>Convert</button>
+        <a
+          className="ml-4 cursor-pointer hover:underline text-blue-400"
+          href={'http://api.map.baidu.com/marker?output=html&src=webapp.baidu.openAPIdemo&coord_type=wgs84&location=' + normalizeCoordStr(state.wgs84)}
+          target="_blank">
+          百度地图
+        </a>
       </div>
 
       <div className="flex flex-row flex-wrap gap-2 items-baseline">
@@ -81,9 +89,15 @@ function App() {
           onClick={() => onConvert('GCJ02')}>Convert</button>
         <a
           className="ml-4 cursor-pointer hover:underline text-blue-400"
-          href={'https://www.google.com/maps/place/' + state.gcj02}
+          href={'https://www.google.com/maps/place/' + normalizeCoordStr(state.gcj02)}
           target="_blank">
           Google Map
+        </a>
+        <a
+          className="ml-4 cursor-pointer hover:underline text-blue-400"
+          href={'http://api.map.baidu.com/marker?output=html&src=webapp.baidu.openAPIdemo&coord_type=gcj02&location=' + normalizeCoordStr(state.gcj02)}
+          target="_blank">
+          百度地图
         </a>
       </div>
 
@@ -98,6 +112,12 @@ function App() {
         <button
           className={buttonClass}
           onClick={() => onConvert('BD09')}>Convert</button>
+        <a
+          className="ml-4 cursor-pointer hover:underline text-blue-400"
+          href={'http://api.map.baidu.com/marker?output=html&src=webapp.baidu.openAPIdemo&coord_type=bd09ll&location=' + normalizeCoordStr(state.bd09)}
+          target="_blank">
+          百度地图
+        </a>
       </div>
     </div>
   )
