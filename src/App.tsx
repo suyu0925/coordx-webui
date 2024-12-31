@@ -2,7 +2,13 @@ import clsx from 'clsx'
 import { convertor, CoordinateType, format, parse } from 'coordx'
 import { useState } from 'react'
 
-const normalizeCoordStr = (str: string) => format(parse(str))
+const normalizeCoordStr = (str: string) => {
+  try {
+    return format(parse(str))
+  } catch {
+    return str
+  }
+}
 
 function App() {
   const [state, setState] = useState({
@@ -68,12 +74,12 @@ function App() {
         <button
           className={buttonClass}
           onClick={() => onConvert('WGS84')}>Convert</button>
-        <a
+        {normalizeCoordStr(state.wgs84) && <a
           className="ml-4 cursor-pointer hover:underline text-blue-400"
           href={'http://api.map.baidu.com/marker?output=html&src=webapp.baidu.openAPIdemo&coord_type=wgs84&location=' + normalizeCoordStr(state.wgs84)}
           target="_blank">
           百度地图
-        </a>
+        </a>}
       </div>
 
       <div className="flex flex-row flex-wrap gap-2 items-baseline">
@@ -87,18 +93,18 @@ function App() {
         <button
           className={buttonClass}
           onClick={() => onConvert('GCJ02')}>Convert</button>
-        <a
+        {normalizeCoordStr(state.gcj02) && <a
           className="ml-4 cursor-pointer hover:underline text-blue-400"
           href={'https://www.google.com/maps/place/' + normalizeCoordStr(state.gcj02)}
           target="_blank">
           Google Map
-        </a>
-        <a
+        </a>}
+        {normalizeCoordStr(state.gcj02) && <a
           className="ml-4 cursor-pointer hover:underline text-blue-400"
           href={'http://api.map.baidu.com/marker?output=html&src=webapp.baidu.openAPIdemo&coord_type=gcj02&location=' + normalizeCoordStr(state.gcj02)}
           target="_blank">
           百度地图
-        </a>
+        </a>}
       </div>
 
       <div className="flex flex-row flex-wrap gap-2 items-baseline">
@@ -112,12 +118,12 @@ function App() {
         <button
           className={buttonClass}
           onClick={() => onConvert('BD09')}>Convert</button>
-        <a
+        {normalizeCoordStr(state.bd09) && <a
           className="ml-4 cursor-pointer hover:underline text-blue-400"
           href={'http://api.map.baidu.com/marker?output=html&src=webapp.baidu.openAPIdemo&coord_type=bd09ll&location=' + normalizeCoordStr(state.bd09)}
           target="_blank">
           百度地图
-        </a>
+        </a>}
       </div>
     </div>
   )
